@@ -7,7 +7,7 @@ package Lesson1;
  * <p/>
  * Write a function:
  * <p/>
- * class Solution { public int solution(int X, int Y, int D); }
+ * class Lesson2.FrogRiverOne { public int solution(int X, int Y, int D); }
  * <p/>
  * that, given three integers X, Y and D, returns the minimal number of jumps from position X to a position equal to or greater than Y.
  * <p/>
