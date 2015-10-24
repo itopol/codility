@@ -12,7 +12,7 @@ public class FrogRiverOne {
         long count = 0;
 
         for (int i = 0; i < A.length; i++) {
-            if (A[i] >= 1 && A[i] <= X && !v[A[i]]) {
+            if (!v[A[i]]) {
                 v[A[i]] = true;
                 count++;
             }
