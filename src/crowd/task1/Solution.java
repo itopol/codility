@@ -32,7 +32,7 @@ public class Solution {
 
         }
 
-        if (stack.size() == 1) {
+        if (stack.size() != 0) {
             return stack.pop();
         } else {
 
