@@ -2,7 +2,7 @@ package crowd.task5;
 
 import java.io.*;
 import java.util.Iterator;
-import java.util.function.Consumer;
+import java.util.LinkedList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,60 +12,53 @@ import java.util.function.Consumer;
  * To change this template use File | Settings | File Templates.
  */
 class Solution implements Iterable<Integer> {
-    private BufferedReader inputReader;
+    public static final int MAGIC_NUMBER = 1000000000;
+    private Reader inputReader;
 
     public Solution(Reader inp) {
-        this.inputReader = new BufferedReader(inp);
+        this.inputReader = inp;
     }
 
 
     @Override
     public Iterator<Integer> iterator() {
-        return new Iterator<Integer>() {
-            @Override
-            public boolean hasNext() {
-                try {
-                    if (inputReader.ready())
-                        return true;
-                    else {
-                        inputReader.close();
-                        return false;
+
+        return readValuesFromFile(inputReader).iterator();
+    }
+
+    private LinkedList<Integer> readValuesFromFile(Reader inputReader) {
+        LinkedList<Integer> values = new LinkedList<>();
+
+        String line = "";
+        try (BufferedReader reader = new BufferedReader(inputReader)) {
+            while (reader.ready()) {
+
+                line = reader.readLine();
+                if (line != null) {
+                    String[] tokens = line.split("[\\r\\n]+");
+                    for (String token : tokens) {
+
+                        try {
+                            Integer val = Integer.valueOf(token);
+                            if (Math.abs(val) > MAGIC_NUMBER) {
+                                continue;
+                            }
+
+                            values.add(val);
+                        } catch (NumberFormatException nfe) {
+//                             log.warn("Unparseble value:  " + line);
+                            continue;
+                        }
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
+
                 }
-                return false;
+
+
             }
-
-            @Override
-            public Integer next() {
-                try {
-                    String value = inputReader.readLine();
-                    Integer intValue = Integer.valueOf(value);
-                    if (Math.abs(intValue) > 1000000000) {
-                        return null;
-                    }
-                    return intValue;
-                } catch (NumberFormatException nfe) {
-//                    log.warn("ignore NumberFormatException")
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-
-            @Override
-            public void forEachRemaining(Consumer<? super Integer> action) {
-                throw new UnsupportedOperationException();
-            }
-        };
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return values;
     }
 
     public static void main(String[] args) throws FileNotFoundException {

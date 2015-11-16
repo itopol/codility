@@ -7,20 +7,31 @@ import java.util.Arrays;
  * User: igortopol
  * Date: 11/15/15
  * Time: 2:37 PM
- * To change this template use File | Settings | File Templates.
  */
 class Solution {
     public static void main(String[] args) {
+        System.out.println(solution(new int[]{100, 250}));
+        System.out.println(solution(new int[]{100, 250, 1000}));
         System.out.println(solution(new int[]{100, 250, 1000, 1300}));
+
     }
 
     public static int solution(int[] a) {
         int sum = 0;
-        int prev_sum = a[0] + a[1];
+
+        if (a.length <= 2) {
+            for (int i : a) {
+                sum += i;
+            }
+            return sum;
+        }
+
+
         Arrays.sort(a);
+        int prevSum = a[0] + a[1];
         for (int i = 2; i < a.length; i++) {
-            sum = a[i] + 2 * prev_sum;
-            prev_sum = sum;
+            sum = a[i] + 2 * prevSum;
+            prevSum = sum;
 
         }
         return sum;
